@@ -25,13 +25,13 @@ void getInput(unsigned long *sizes, size_t dimension, size_t *nbOfPoints){
 
 void print(Point *closestPointPair){
     printf("Point 1: (");
-    for(size_t i=0; i<closestPointPair[0].getDimension(); ++i){
+    for(size_t i=0; i<closestPointPair[0].dimension; ++i){
         printf("%lf,", closestPointPair[0].getCoordinate(i));
     }
     printf(")\n");
 
     printf("Point 2: (");
-    for(size_t i=0; i<closestPointPair[1].getDimension(); ++i){
+    for(size_t i=0; i<closestPointPair[1].dimension; ++i){
         printf("%lf, ", closestPointPair[1].getCoordinate(i));
     }
     printf(")\n");

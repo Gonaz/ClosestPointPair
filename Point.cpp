@@ -23,14 +23,14 @@ void Point::setDimension(size_t dimension){
  * Pre: punten moeten van dezelfde dimensie zijn
  */
 double Point::calculateDistanceTo(Point p){
-    double *diff = new double[getDimension()];
+    double *diff = new double[dimension];
 
-    for(size_t i=0; i<getDimension(); ++i){
+    for(size_t i=0; i<dimension; ++i){
         diff[i] = getCoordinate(i)-p.getCoordinate(i);
     }
 
     double sum = 0.0;
-    for(size_t i=0; i<getDimension(); ++i){
+    for(size_t i=0; i<dimension; ++i){
         sum += (diff[i]*diff[i]);
     }
 
@@ -42,14 +42,14 @@ double Point::calculateDistanceTo(Point p){
  *  Pre: punten moeten van dezelfde dimensie zijn
  */
 double Point::calculateSquareDistanceTo(Point p){
-    double *diff = new double[getDimension()];
+    double *diff = new double[dimension];
 
-    for(size_t i=0; i<getDimension(); ++i){
+    for(size_t i=0; i<dimension; ++i){
         diff[i] = getCoordinate(i)-p.getCoordinate(i);
     }
 
     double sum = 0.0;
-    for(size_t i=0; i<getDimension(); ++i){
+    for(size_t i=0; i<dimension; ++i){
         sum += (diff[i]*diff[i]);
     }
 
