@@ -4,18 +4,15 @@
 #include "Point.h"
 #include <algorithm>
 
-class NDimensional {
-public:
+struct NDimensional {
     NDimensional(size_t dimension, size_t nbOfPoints);
     ~NDimensional(){delete[] points;}
     std::pair<Point, Point> sweep();
     Point* bruteForce();
-protected:
     Point* getPoints(){return points;}
     size_t getNbOfPoints(){return nbOfPoints;}
     void fillPlane();
     void fillPlaneWorstCase();
-private:
     Point *points;
     size_t nbOfPoints;
     size_t dimension;
