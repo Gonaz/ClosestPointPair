@@ -1,46 +1,12 @@
 #include <cstdlib>
 #include <iostream>
-#include <sys/time.h>
 #include <exception>
 #include <cstdio>
+#include <chrono>
 
 #include "TwoDimensional.h"
 #include "ThreeDimensional.h"
 #include "NDimensional.h"
-
-int sec;
-int uSec;
-
-void startTimer(){
-    struct timeval tv;
-    struct timezone tz;
-
-    gettimeofday(&tv,&tz);
-
-    sec = tv.tv_sec;
-    uSec = tv.tv_usec;
-}
-
-void stopTimer(){
-    struct timeval tv;
-    struct timezone tz;
-
-    gettimeofday(&tv,&tz);
-
-    int beginSec = sec;
-    int beginUSec = uSec;
-    int endUSec;
-    int endSec;
-    endSec = tv.tv_sec;
-    endUSec = tv.tv_usec;
-    sec = endSec-beginSec;
-    uSec = endUSec-beginUSec;
-
-    if(uSec <= 0){
-        --sec;
-        uSec = 1000000+(endUSec-beginUSec);
-    }
-}
 
 void getDimension(size_t *dimension){
     printf("Dimension: ");
@@ -82,7 +48,6 @@ void print(Point *closestPointPair){
     printf(")\n");
     
     printf("Distance: %lf\n", closestPointPair[0].calculateDistanceTo(closestPointPair[1]));
-    printf("Time calculation: %d s %.6d µs\n", sec, uSec);
 }
 
 void twoDimensional(){
@@ -105,11 +70,12 @@ void twoDimensional(){
 //    print(closestPointPair);
 //    d.drawPoints(closestPointPair, 0.0, 1.0, 0.0);
 
-    startTimer();
+    auto t1 = std::chrono::high_resolution_clock::now();
     closestPointPair = d.sweep();
-    stopTimer();
+    auto t2 = std::chrono::high_resolution_clock::now();
     printf("\nPlane Sweep\n");
     print(closestPointPair);
+    std::cout << "Duration: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << " milliseconds\n";
     d.drawPoints(closestPointPair, 0.0, 0.0, 1.0);
 
     delete[] closestPointPair;
@@ -136,11 +102,12 @@ void threeDimensional(){
 //    print(closestPointPair);
 //    d.drawPoints(closestPointPair, 0.0, 1.0, 0.0);
 
-    startTimer();
+    auto t1 = std::chrono::high_resolution_clock::now();
     closestPointPair = d.sweep();
-    stopTimer();
+    auto t2 = std::chrono::high_resolution_clock::now();
     printf("\nPlane Sweep\n");
     print(closestPointPair);
+    std::cout << "Duration: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << " milliseconds\n";
     d.drawPoints(closestPointPair, 0.0, 0.0, 1.0);
 
     d.printPlane(0.025);
@@ -197,10 +164,10 @@ void nDimensional(){
     //                stopTimer();
     //                printf("%d,%d\t", sec, uSec);
 
-                startTimer();
+                auto t1 = std::chrono::high_resolution_clock::now();
                 closestPointPair = d->sweep();
-                stopTimer();
-                printf("%d,%d\n", sec, uSec);
+                auto t2 = std::chrono::high_resolution_clock::now();
+                std::cout << "Duration: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << " milliseconds\n";
 
                 delete[] closestPointPair;
                 delete d;
@@ -227,18 +194,19 @@ void nDimensional2(){
     NDimensional *d = new NDimensional(sizes, dimension, nbOfPoints);
     Point *closestPointPair;
 
-    startTimer();
+    auto t1 = std::chrono::high_resolution_clock::now();
     closestPointPair = d->bruteForce();
-    stopTimer();
+    auto t2 = std::chrono::high_resolution_clock::now();
     printf("\nBrute Force\n");
     print(closestPointPair);
+    std::cout << "Duration: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << " milliseconds\n";
 
-    startTimer();
+    t1 = std::chrono::high_resolution_clock::now();
     closestPointPair = d->sweep();
-    stopTimer();
+    t2 = std::chrono::high_resolution_clock::now();
     printf("\nPlane Sweep\n");
     print(closestPointPair);
-    printf("%d,%d\n", sec, uSec);
+    std::cout << "Duration: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << " milliseconds\n";
 
     delete[] closestPointPair;
     delete d;
