@@ -12,12 +12,7 @@ NDimensional::NDimensional(size_t dimension, size_t nbOfPoints) : dimension(dime
 }
 
 void NDimensional::fillPlane(){
-    try{
-        points = new Point[nbOfPoints];
-    }catch(bad_alloc&){
-        fprintf(stderr, "Bad memory allocation. Maybe the number of points is too large or negative.\n");
-    }
-
+    points = std::vector<Point>(nbOfPoints);
     double *locations = new double[dimension];
 
     for(size_t i=0; i<nbOfPoints; ++i){
@@ -32,15 +27,10 @@ void NDimensional::fillPlane(){
 }
 
 void NDimensional::fillPlaneWorstCase(){
-    try{
-        points = new Point[nbOfPoints];
-    }catch(bad_alloc&){
-        fprintf(stderr, "Bad memory allocation. Maybe the number of points is too large or negative.\n");
-    }
-
+    points = std::vector<Point>(nbOfPoints);
     double *locations = new double[dimension];
-    locations[0] = dis(gen);
 
+    locations[0] = dis(gen);
     for(size_t i=0; i<nbOfPoints; ++i){
         points[i].setDimension(dimension);
         for(size_t j=1; j<dimension; ++j){

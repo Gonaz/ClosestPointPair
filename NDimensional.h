@@ -6,14 +6,13 @@
 
 struct NDimensional {
     NDimensional(size_t dimension, size_t nbOfPoints);
-    ~NDimensional(){delete[] points;}
     std::pair<Point, Point> sweep();
     Point* bruteForce();
-    Point* getPoints(){return points;}
     size_t getNbOfPoints(){return nbOfPoints;}
     void fillPlane();
     void fillPlaneWorstCase();
-    Point *points;
+
+    std::vector<Point> points;
     size_t nbOfPoints;
     size_t dimension;
 
