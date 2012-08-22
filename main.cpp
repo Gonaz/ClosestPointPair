@@ -48,9 +48,8 @@ void twoDimensional(){
 
     getInput(sizes, dimension, &nbOfPoints);
 
-    TwoDimensional d(sizes, nbOfPoints);
+    NDimensional d(sizes, 2, nbOfPoints);
     Point *closestPointPair;
-    d.printPlane();
 
 //    startTimer();
 //    closestPointPair = d.bruteForce();
@@ -65,7 +64,6 @@ void twoDimensional(){
     printf("\nPlane Sweep\n");
     print(closestPointPair);
     std::cout << "Duration: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << " milliseconds\n";
-    d.drawPoints(closestPointPair, 0.0, 0.0, 1.0);
 
     delete[] closestPointPair;
     delete[] sizes;
@@ -80,9 +78,8 @@ void threeDimensional(){
 
     getInput(sizes, dimension, &nbOfPoints);
 
-    ThreeDimensional d(sizes, nbOfPoints);
+    NDimensional d(sizes, 3, nbOfPoints);
     Point *closestPointPair;
-    d.printPlane();
 
 //    startTimer();
 //    closestPointPair = d.bruteForce();
@@ -97,9 +94,6 @@ void threeDimensional(){
     printf("\nPlane Sweep\n");
     print(closestPointPair);
     std::cout << "Duration: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << " milliseconds\n";
-    d.drawPoints(closestPointPair, 0.0, 0.0, 1.0);
-
-    d.printPlane(0.025);
 
     delete[] closestPointPair;
     delete sizes;
