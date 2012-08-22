@@ -3,8 +3,7 @@
 
 Point::Point(){}
 
-Point::Point(size_t dimension){
-    this->dimension = dimension;
+Point::Point(size_t dimension) : dimension(dimension){
     coordinates = new double[dimension];
 }
 

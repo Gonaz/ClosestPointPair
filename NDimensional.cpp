@@ -11,12 +11,7 @@
 
 using namespace std;
 
-NDimensional::NDimensional(size_t dimension, size_t nbOfPoints){
-    gen = std::mt19937(rd());
-    dis = std::uniform_real_distribution<>(0, 1000000);
-
-    this->dimension = dimension;
-    this->nbOfPoints = nbOfPoints;
+NDimensional::NDimensional(size_t dimension, size_t nbOfPoints) : dimension(dimension), nbOfPoints(nbOfPoints), gen(rd()), dis(std::uniform_real_distribution<>(0, 1000000)){
     fillPlane();
     //fillPlaneWorstCase();
 }
