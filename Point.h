@@ -1,7 +1,7 @@
 #ifndef _POINT_H
 #define	_POINT_H
 
-#include <cstdlib>
+#include <cstddef>
 
 struct Point {
     Point();

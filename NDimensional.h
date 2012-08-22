@@ -4,8 +4,6 @@
 #include "Point.h"
 #include <algorithm>
 
-using namespace std;
-
 class NDimensional {
 public:
     NDimensional(unsigned long *sizes, size_t dimension, size_t nbOfPoints);
@@ -24,7 +22,7 @@ private:
     size_t dimension;
     unsigned long *sizes;
     bool static cmp(Point p1, Point p2){return p1.getCoordinate(0) < p2.getCoordinate(0);};
-    void static sortPoints(Point *p, size_t nbOfPoints){sort(p, p+nbOfPoints, cmp);};
+    void static sortPoints(Point *p, size_t nbOfPoints){std::sort(p, p+nbOfPoints, cmp);};
 };
 
 #endif	/* _NDIMENSIONAL_H */

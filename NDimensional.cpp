@@ -9,6 +9,8 @@
 
 #define RESOLUTION 0.0000000001
 
+using namespace std;
+
 NDimensional::NDimensional(unsigned long *sizes, size_t dimension, size_t nbOfPoints){
     this->dimension = dimension;
     this->nbOfPoints = nbOfPoints;
