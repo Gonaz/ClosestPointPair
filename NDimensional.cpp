@@ -8,7 +8,6 @@
 #include <cmath>
 #include <cstdio>
 
-#define TRUE 1
 #define RESOLUTION 0.0000000001
 
 NDimensional::NDimensional(unsigned long *sizes, size_t dimension, size_t nbOfPoints){
@@ -114,7 +113,7 @@ Point* NDimensional::sweep(){
             } else{
                 ++k; //nodige voor de gemiddelde k-waarde te berekenen
                 ++tellerK; //nodige voor de maximale k-waarde te berekenen
-                bool candidate = TRUE;
+                bool candidate = true;
                 size_t i=1;
                 while(candidate && i<dimension){
                     candidate = pointsSorted.at(l).getCoordinate(i)-pointsSorted.at(j).getCoordinate(i++) < sqrtD;

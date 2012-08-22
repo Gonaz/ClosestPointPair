@@ -8,9 +8,6 @@
 #include "ThreeDimensional.h"
 #include "NDimensional.h"
 
-#define TRUE 1
-#define FALSE 0
-
 int sec;
 int uSec;
 
