@@ -17,14 +17,13 @@ size_t getDimension(){
     return dimension;
 }
 
-void getInput(unsigned long *sizes, size_t dimension, size_t &nbOfPoints){
-    for(size_t i=0; i<dimension; ++i){
-        std::cout << "Maximum size for dimension " << (i+1) << ": ";
-        std::cin >> sizes[i]; //result = scanf("%d", &sizes[i]);
-    }
-
+size_t getNumberOfPoints(){
     std::cout << "Number of points: ";
+
+    size_t nbOfPoints;
     std::cin >> nbOfPoints;
+
+    return nbOfPoints;
 }
 
 void print(std::pair<Point, Point> closestPointPair){
@@ -48,8 +47,7 @@ void go(size_t dimension){
     size_t nbOfPoints = 0;
 
     sizes = new unsigned long[dimension];
-
-    getInput(sizes, dimension, nbOfPoints);
+    nbOfPoints = getNumberOfPoints();
 
     NDimensional d(dimension, nbOfPoints);
     std::pair<Point, Point> closestPointPair;
