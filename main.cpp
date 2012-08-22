@@ -2,9 +2,8 @@
 #include <exception>
 #include <chrono>
 
-#include "TwoDimensional.h"
-#include "ThreeDimensional.h"
-#include "NDimensional.h"
+#include "Point.cpp"
+#include "NDimensional.cpp"
 
 size_t getDimension(){
     std::cout << "Dimension: ";
@@ -24,15 +23,16 @@ size_t getNumberOfPoints(){
     return nbOfPoints;
 }
 
-void print(std::pair<Point, Point> closestPointPair){
+template <size_t dimension>
+void print(std::pair<Point<dimension>, Point<dimension> > closestPointPair){
     printf("Point 1: (");
-    for(size_t i=0; i<closestPointPair.first.dimension; ++i){
+    for(size_t i=0; i<dimension; ++i){
         printf("%lf,", closestPointPair.first.getCoordinate(i));
     }
     printf(")\n");
 
     printf("Point 2: (");
-    for(size_t i=0; i<closestPointPair.second.dimension; ++i){
+    for(size_t i=0; i<dimension; ++i){
         printf("%lf, ", closestPointPair.second.getCoordinate(i));
     }
     printf(")\n");
@@ -40,15 +40,16 @@ void print(std::pair<Point, Point> closestPointPair){
     printf("Distance: %lf\n", closestPointPair.first.calculateDistanceTo(closestPointPair.second));
 }
 
-void go(size_t dimension){
+template<size_t dimensions>
+void go(){
     unsigned long *sizes;
     size_t nbOfPoints = 0;
 
-    sizes = new unsigned long[dimension];
+    sizes = new unsigned long[dimensions];
     nbOfPoints = getNumberOfPoints();
 
-    NDimensional d(dimension, nbOfPoints);
-    std::pair<Point, Point> closestPointPair;
+    NDimensional<dimensions> d(nbOfPoints);
+    std::pair<Point<dimensions>, Point<dimensions> > closestPointPair;
 
     auto t1 = std::chrono::high_resolution_clock::now();
     closestPointPair = d.sweep();
@@ -61,6 +62,6 @@ void go(size_t dimension){
 }
 
 int main() {
-    go(2);
+    go<2>();
     return 0;
 }

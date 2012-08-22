@@ -1,32 +1,26 @@
 #include "Point.h"
 #include <cmath>
 
-Point::Point(){}
+template <size_t dimensions>
+Point<dimensions>::Point(){}
 
-Point::Point(size_t dimension) : dimension(dimension){
-    coordinates = new double[dimension];
-}
-
-void Point::setCoordinates(double *coordinates){
-    for(size_t i=0; i<dimension; ++i){
+template <size_t dimensions>
+void Point<dimensions>::setCoordinates(std::array<double, dimensions> &coordinates){
+    for(size_t i=0; i<dimensions; ++i){
         this->coordinates[i] = coordinates[i];
     }
 }
 
-void Point::setDimension(size_t dimension){
-    this->dimension = dimension;
-    coordinates = new double[dimension];
-}
+template <size_t dimensions>
+double Point<dimensions>::calculateDistanceTo(Point p){
+    double *diff = new double[dimensions];
 
-double Point::calculateDistanceTo(Point p){
-    double *diff = new double[dimension];
-
-    for(size_t i=0; i<dimension; ++i){
+    for(size_t i=0; i<dimensions; ++i){
         diff[i] = getCoordinate(i)-p.getCoordinate(i);
     }
 
     double sum = 0.0;
-    for(size_t i=0; i<dimension; ++i){
+    for(size_t i=0; i<dimensions; ++i){
         sum += (diff[i]*diff[i]);
     }
 
@@ -34,15 +28,16 @@ double Point::calculateDistanceTo(Point p){
     return sqrt(sum);
 }
 
-double Point::calculateSquareDistanceTo(Point p){
-    double *diff = new double[dimension];
+template <size_t dimensions>
+double Point<dimensions>::calculateSquareDistanceTo(Point p){
+    double *diff = new double[dimensions];
 
-    for(size_t i=0; i<dimension; ++i){
+    for(size_t i=0; i<dimensions; ++i){
         diff[i] = getCoordinate(i)-p.getCoordinate(i);
     }
 
     double sum = 0.0;
-    for(size_t i=0; i<dimension; ++i){
+    for(size_t i=0; i<dimensions; ++i){
         sum += (diff[i]*diff[i]);
     }
 

@@ -6,51 +6,50 @@
 
 using namespace std;
 
-NDimensional::NDimensional(size_t dimension, size_t nbOfPoints) : dimension(dimension), nbOfPoints(nbOfPoints), gen(rd()), dis(std::uniform_real_distribution<>(0, 1000000)){
+template <size_t dimensions>
+NDimensional<dimensions>::NDimensional(size_t nbOfPoints) : nbOfPoints(nbOfPoints), gen(rd()), dis(std::uniform_real_distribution<>(0, 1000000)){
     fillPlane();
     //fillPlaneWorstCase();
 }
 
-void NDimensional::fillPlane(){
-    points = std::vector<Point>(nbOfPoints);
-    double *locations = new double[dimension];
+template <size_t dimensions>
+void NDimensional<dimensions>::fillPlane(){
+    points = std::vector<Point<dimensions> >(nbOfPoints);
+    std::array<double, dimensions> locations;
 
     for(size_t i=0; i<nbOfPoints; ++i){
-        points[i].setDimension(dimension);
-        for(size_t j=0; j<dimension; ++j){
+        for(size_t j=0; j<dimensions; ++j){
             locations[j] = dis(gen);
         }
         points[i].setCoordinates(locations);
     }
-
-    delete[] locations;
 }
 
-void NDimensional::fillPlaneWorstCase(){
-    points = std::vector<Point>(nbOfPoints);
-    double *locations = new double[dimension];
+template <size_t dimensions>
+void NDimensional<dimensions>::fillPlaneWorstCase(){
+    points = std::vector<Point<dimensions> >(nbOfPoints);
+    std::vector<double> locations(dimensions);
 
     locations[0] = dis(gen);
     for(size_t i=0; i<nbOfPoints; ++i){
-        points[i].setDimension(dimension);
-        for(size_t j=1; j<dimension; ++j){
+        points[i].setDimension(dimensions);
+        for(size_t j=1; j<dimensions; ++j){
             locations[j] = dis(gen);
         }
         points[i].setCoordinates(locations);
     }
-
-    delete[] locations;
 }
 
-std::pair<Point, Point> NDimensional::sweep(){
-    sortPoints(&points[0], nbOfPoints);
+template <size_t dimensions>
+std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions>::sweep(){
+    std::sort(points.begin(), points.end(), [](Point<dimensions> p1, Point<dimensions> p2){return p1.getCoordinate(0) < p2.getCoordinate(0);});
 
-    deque<Point> pointsSorted;
+    deque<Point<dimensions> > pointsSorted;
     for(size_t i=0; i<nbOfPoints; ++i){
         pointsSorted.push_back(points[i]);
     }
 
-    std::pair<Point, Point> closestPointPair(pointsSorted.at(0), pointsSorted.at(1));
+    std::pair<Point<dimensions> , Point<dimensions> > closestPointPair(pointsSorted.at(0), pointsSorted.at(1));
 
     double d = pointsSorted.at(0).calculateSquareDistanceTo(pointsSorted.at(1));
     double sqrtD = sqrt(d);
@@ -84,7 +83,7 @@ std::pair<Point, Point> NDimensional::sweep(){
                 ++tellerK; //nodige voor de maximale k-waarde te berekenen
                 bool candidate = true;
                 size_t i=1;
-                while(candidate && i<dimension){
+                while(candidate && i<dimensions){
                     candidate = pointsSorted.at(l).getCoordinate(i)-pointsSorted.at(j).getCoordinate(i++) < sqrtD;
                 }
                 
@@ -115,7 +114,8 @@ std::pair<Point, Point> NDimensional::sweep(){
     return closestPointPair;
 }
 
-Point* NDimensional::bruteForce(){
+template <size_t dimensions>
+std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions>::bruteForce(){
     double min = DBL_MAX;
     size_t index1, index2;
     double distance;
@@ -131,14 +131,5 @@ Point* NDimensional::bruteForce(){
         }
     }
 
-    Point *closestPointPair;
-    try{
-        closestPointPair = new Point[2];
-    } catch(bad_alloc&){
-        fprintf(stderr, "Bad memory allocation.");
-    }
-    closestPointPair[0] = points[index1];
-    closestPointPair[1] = points[index2];
-
-    return closestPointPair;
+    return std::make_pair(points[index1], points[index2]);
 }
