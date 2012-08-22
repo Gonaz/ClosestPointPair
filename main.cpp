@@ -1,7 +1,5 @@
-#include <cstdlib>
 #include <iostream>
 #include <exception>
-#include <cstdio>
 #include <chrono>
 
 #include "TwoDimensional.h"
@@ -64,5 +62,5 @@ void go(size_t dimension){
 
 int main() {
     go(2);
-    return (EXIT_SUCCESS);
+    return 0;
 }
