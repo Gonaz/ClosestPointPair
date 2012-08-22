@@ -51,7 +51,7 @@ void go(size_t dimension){
 
     getInput(sizes, dimension, nbOfPoints);
 
-    NDimensional d(sizes, dimension, nbOfPoints);
+    NDimensional d(dimension, nbOfPoints);
     std::pair<Point, Point> closestPointPair;
 
     auto t1 = std::chrono::high_resolution_clock::now();

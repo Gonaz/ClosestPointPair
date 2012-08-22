@@ -11,16 +11,17 @@
 
 using namespace std;
 
-NDimensional::NDimensional(unsigned long *sizes, size_t dimension, size_t nbOfPoints){
+NDimensional::NDimensional(size_t dimension, size_t nbOfPoints){
+    gen = std::mt19937(rd());
+    dis = std::uniform_real_distribution<>(0, 1000000);
+
     this->dimension = dimension;
     this->nbOfPoints = nbOfPoints;
-    this->sizes = sizes;
     fillPlane();
     //fillPlaneWorstCase();
 }
 
 void NDimensional::fillPlane(){
-    srand(time(NULL));
     try{
         points = new Point[nbOfPoints];
     }catch(bad_alloc&){
@@ -32,7 +33,7 @@ void NDimensional::fillPlane(){
     for(size_t i=0; i<nbOfPoints; ++i){
         points[i].setDimension(dimension);
         for(size_t j=0; j<dimension; ++j){
-            locations[j] = (rand()%(long)(sizes[j]/RESOLUTION))*RESOLUTION;
+            locations[j] = dis(gen);
         }
         points[i].setCoordinates(locations);
     }
@@ -41,24 +42,19 @@ void NDimensional::fillPlane(){
 }
 
 void NDimensional::fillPlaneWorstCase(){
-    srand(time(NULL));
     try{
         points = new Point[nbOfPoints];
     }catch(bad_alloc&){
         fprintf(stderr, "Bad memory allocation. Maybe the number of points is too large or negative.\n");
     }
-    
+
     double *locations = new double[dimension];
-    locations[0] = (rand()%(long)(sizes[0]/RESOLUTION))*RESOLUTION;
-//    for(size_t j=1; j<dimension; ++j){
-//        locations[j] = 0.5;
-//    }
+    locations[0] = dis(gen);
 
     for(size_t i=0; i<nbOfPoints; ++i){
         points[i].setDimension(dimension);
         for(size_t j=1; j<dimension; ++j){
-            //locations[j] += RESOLUTION;
-            locations[j] = (rand()%(long)(sizes[j]/RESOLUTION))*RESOLUTION;
+            locations[j] = dis(gen);
         }
         points[i].setCoordinates(locations);
     }
