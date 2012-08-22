@@ -9,7 +9,6 @@ struct NDimensional {
     NDimensional(size_t nbOfPoints);
     std::pair<Point<dimensions>, Point<dimensions> > sweep();
     std::pair<Point<dimensions>, Point<dimensions> > bruteForce();
-    size_t getNbOfPoints(){return nbOfPoints;}
     void fillPlane();
     void fillPlaneWorstCase();
 
@@ -22,4 +21,3 @@ struct NDimensional {
 };
 
 #endif	/* _NDIMENSIONAL_H */
-
