@@ -18,9 +18,6 @@ void Point::setDimension(size_t dimension){
     coordinates = new double[dimension];
 }
 
-/*
- * Pre: punten moeten van dezelfde dimensie zijn
- */
 double Point::calculateDistanceTo(Point p){
     double *diff = new double[dimension];
 
@@ -37,9 +34,6 @@ double Point::calculateDistanceTo(Point p){
     return sqrt(sum);
 }
 
-/*
- *  Pre: punten moeten van dezelfde dimensie zijn
- */
 double Point::calculateSquareDistanceTo(Point p){
     double *diff = new double[dimension];
 

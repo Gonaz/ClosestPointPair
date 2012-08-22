@@ -1,13 +1,8 @@
 #include "NDimensional.h"
 
-#include <cstdlib>
-#include <ctime>
 #include <iostream>
 #include <deque>
 #include <cfloat>
-#include <cmath>
-
-#define RESOLUTION 0.0000000001
 
 using namespace std;
 
