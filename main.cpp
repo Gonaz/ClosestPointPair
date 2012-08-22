@@ -8,19 +8,23 @@
 #include "ThreeDimensional.h"
 #include "NDimensional.h"
 
-void getDimension(size_t *dimension){
+size_t getDimension(){
     std::cout << "Dimension: ";
-    std::cin >> *(dimension);
+
+    size_t dimension;
+    std::cin >> dimension;
+
+    return dimension;
 }
 
-void getInput(unsigned long *sizes, size_t dimension, size_t *nbOfPoints){
+void getInput(unsigned long *sizes, size_t dimension, size_t &nbOfPoints){
     for(size_t i=0; i<dimension; ++i){
         std::cout << "Maximum size for dimension " << (i+1) << ": ";
         std::cin >> sizes[i]; //result = scanf("%d", &sizes[i]);
     }
 
     std::cout << "Number of points: ";
-    std::cin >> *(nbOfPoints);
+    std::cin >> nbOfPoints;
 }
 
 void print(Point *closestPointPair){
@@ -45,7 +49,7 @@ void go(size_t dimension){
 
     sizes = new unsigned long[dimension];
 
-    getInput(sizes, dimension, &nbOfPoints);
+    getInput(sizes, dimension, nbOfPoints);
 
     NDimensional d(sizes, dimension, nbOfPoints);
     Point *closestPointPair;
