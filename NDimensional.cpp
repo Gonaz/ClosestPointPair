@@ -6,7 +6,6 @@
 #include <deque>
 #include <cfloat>
 #include <cmath>
-#include <cstdio>
 
 #define RESOLUTION 0.0000000001
 

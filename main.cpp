@@ -9,29 +9,18 @@
 #include "NDimensional.h"
 
 void getDimension(size_t *dimension){
-    printf("Dimension: ");
-    unsigned int result = scanf("%d", dimension);
-    if(result == 0){
-        fprintf(stderr, "Bad input");
-    }
+    std::cout << "Dimension: ";
+    std::cin >> *(dimension);
 }
 
 void getInput(unsigned long *sizes, size_t dimension, size_t *nbOfPoints){
-    unsigned int result;
-
     for(size_t i=0; i<dimension; ++i){
-        printf("Maximum size for dimension %d: ", i+1);
-        result = scanf("%d", &sizes[i]);
-        if(result == 0){
-            fprintf(stderr, "Bad input");
-        }
+        std::cout << "Maximum size for dimension " << (i+1) << ": ";
+        std::cin >> sizes[i]; //result = scanf("%d", &sizes[i]);
     }
 
-    printf("Number of points: ", nbOfPoints);
-    result = scanf("%d", nbOfPoints);
-    if(result == 0){
-        fprintf(stderr, "Bad input");
-    }
+    std::cout << "Number of points: ";
+    std::cin >> *(nbOfPoints);
 }
 
 void print(Point *closestPointPair){
@@ -120,7 +109,6 @@ void nDimensional(){
     unsigned long *sizes;
     size_t nbOfPoints = 0;
     size_t dimension = 0;
-    unsigned int result = 0;
 
     getDimension(&dimension);
 
@@ -131,7 +119,7 @@ void nDimensional(){
 //    }
 
     for(; dimension<=3; ++dimension){
-        printf("Dimension: %d \n", dimension);
+        std::cout << "Dimension: " << dimension << std::endl;
         sizes = new unsigned long[dimension];
         for(size_t i=0; i<dimension; ++i){
             sizes[i] = 1;
@@ -155,7 +143,7 @@ void nDimensional(){
             }
 
             for(int i=0; i<10; ++i){
-                printf("%d\t", nbOfPoints);
+                std::cout << nbOfPoints << "\t";
                 NDimensional *d = new NDimensional(sizes, dimension, nbOfPoints);
                 Point *closestPointPair;
 
@@ -213,7 +201,7 @@ void nDimensional2(){
     delete[] sizes;
 }
 
-int main(int argc, char** argv) {
+int main() {
     twoDimensional();
     //threeDimensional();
     //nDimensional();
