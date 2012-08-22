@@ -27,20 +27,20 @@ void getInput(unsigned long *sizes, size_t dimension, size_t &nbOfPoints){
     std::cin >> nbOfPoints;
 }
 
-void print(Point *closestPointPair){
+void print(std::pair<Point, Point> closestPointPair){
     printf("Point 1: (");
-    for(size_t i=0; i<closestPointPair[0].dimension; ++i){
-        printf("%lf,", closestPointPair[0].getCoordinate(i));
+    for(size_t i=0; i<closestPointPair.first.dimension; ++i){
+        printf("%lf,", closestPointPair.first.getCoordinate(i));
     }
     printf(")\n");
 
     printf("Point 2: (");
-    for(size_t i=0; i<closestPointPair[1].dimension; ++i){
-        printf("%lf, ", closestPointPair[1].getCoordinate(i));
+    for(size_t i=0; i<closestPointPair.second.dimension; ++i){
+        printf("%lf, ", closestPointPair.second.getCoordinate(i));
     }
     printf(")\n");
     
-    printf("Distance: %lf\n", closestPointPair[0].calculateDistanceTo(closestPointPair[1]));
+    printf("Distance: %lf\n", closestPointPair.first.calculateDistanceTo(closestPointPair.second));
 }
 
 void go(size_t dimension){
@@ -52,7 +52,7 @@ void go(size_t dimension){
     getInput(sizes, dimension, nbOfPoints);
 
     NDimensional d(sizes, dimension, nbOfPoints);
-    Point *closestPointPair;
+    std::pair<Point, Point> closestPointPair;
 
     auto t1 = std::chrono::high_resolution_clock::now();
     closestPointPair = d.sweep();
@@ -61,7 +61,6 @@ void go(size_t dimension){
     print(closestPointPair);
     std::cout << "Duration: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << " milliseconds\n";
 
-    delete[] closestPointPair;
     delete[] sizes;
 }
 

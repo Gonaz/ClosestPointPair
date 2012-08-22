@@ -66,7 +66,7 @@ void NDimensional::fillPlaneWorstCase(){
     delete[] locations;
 }
 
-Point* NDimensional::sweep(){
+std::pair<Point, Point> NDimensional::sweep(){
     sortPoints(&points[0], nbOfPoints);
 
     deque<Point> pointsSorted;
@@ -74,15 +74,7 @@ Point* NDimensional::sweep(){
         pointsSorted.push_back(points[i]);
     }
 
-    Point *closestPointPair;
-    try{
-        closestPointPair = new Point[2];
-    } catch(bad_alloc&){
-        fprintf(stderr, "Bad memory allocation");
-    }
-
-    closestPointPair[0] = pointsSorted.at(0);
-    closestPointPair[1] = pointsSorted.at(1);
+    std::pair<Point, Point> closestPointPair(pointsSorted.at(0), pointsSorted.at(1));
 
     double d = pointsSorted.at(0).calculateSquareDistanceTo(pointsSorted.at(1));
     double sqrtD = sqrt(d);
@@ -127,8 +119,8 @@ Point* NDimensional::sweep(){
                     if(distance < d){
                         d = distance;
                         sqrtD = sqrt(d);
-                        closestPointPair[0] = pointsSorted.at(j);
-                        closestPointPair[1] = pointsSorted.at(l);
+                        closestPointPair.first = pointsSorted.at(j);
+                        closestPointPair.second = pointsSorted.at(l);
                     }
                 }
                 ++j;

@@ -8,7 +8,7 @@ class NDimensional {
 public:
     NDimensional(unsigned long *sizes, size_t dimension, size_t nbOfPoints);
     ~NDimensional(){delete[] points;};
-    Point* sweep();
+    std::pair<Point, Point> sweep();
     Point* bruteForce();
 protected:
     unsigned long* getSizes(){return sizes;};
