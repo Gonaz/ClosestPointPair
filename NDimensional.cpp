@@ -1,4 +1,4 @@
-#define STATISTICS 0
+#define STATISTICS 1
 
 #if STATISTICS
 #include <iostream>
@@ -94,7 +94,7 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
                 bool candidate = true;
                 size_t i=1;
                 while(candidate && i<dimensions){
-                    candidate = pointsSorted[l].coordinates[i]-pointsSorted[j].coordinates[i] < sqrtD;
+                    candidate = abs(pointsSorted[l].coordinates[i]-pointsSorted[j].coordinates[i]) < sqrtD;
                     ++i;
                 }
                 
