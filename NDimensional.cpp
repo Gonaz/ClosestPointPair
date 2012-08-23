@@ -6,27 +6,27 @@
 
 using namespace std;
 
-template <size_t dimensions>
-NDimensional<dimensions>::NDimensional(size_t nbOfPoints) : nbOfPoints(nbOfPoints), gen(rd()), dis(std::uniform_real_distribution<>(0, 1000000)){
+template <size_t dimensions, size_t nbOfPoints>
+NDimensional<dimensions, nbOfPoints>::NDimensional() : gen(rd()), dis(std::uniform_real_distribution<>(0, 1000000)){
+    points = new std::array<Point<dimensions>, nbOfPoints>();
     fillPlane();
     //fillPlaneWorstCase();
 }
 
-template <size_t dimensions>
-void NDimensional<dimensions>::fillPlane(){
-    points = std::vector<Point<dimensions> >(nbOfPoints);
+template <size_t dimensions, size_t nbOfPoints>
+void NDimensional<dimensions, nbOfPoints>::fillPlane(){
     std::array<double, dimensions> locations;
 
     for(size_t i=0; i<nbOfPoints; ++i){
         for(size_t j=0; j<dimensions; ++j){
             locations[j] = dis(gen);
         }
-        points[i].setCoordinates(locations);
+        points->operator [](i).setCoordinates(locations);
     }
 }
 
-template <size_t dimensions>
-void NDimensional<dimensions>::fillPlaneWorstCase(){
+template <size_t dimensions, size_t nbOfPoints>
+void NDimensional<dimensions, nbOfPoints>::fillPlaneWorstCase(){
     points = std::vector<Point<dimensions> >(nbOfPoints);
     std::vector<double> locations(dimensions);
 
@@ -36,17 +36,17 @@ void NDimensional<dimensions>::fillPlaneWorstCase(){
         for(size_t j=1; j<dimensions; ++j){
             locations[j] = dis(gen);
         }
-        points[i].setCoordinates(locations);
+        points->operator [](i).setCoordinates(locations);
     }
 }
 
-template <size_t dimensions>
-std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions>::sweep(){
-    std::sort(points.begin(), points.end(), [](Point<dimensions> p1, Point<dimensions> p2){return p1.getCoordinate(0) < p2.getCoordinate(0);});
+template <size_t dimensions, size_t nbOfPoints>
+std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfPoints>::sweep(){
+    std::sort(points->begin(), points->end(), [](Point<dimensions> p1, Point<dimensions> p2){return p1.getCoordinate(0) < p2.getCoordinate(0);});
 
     deque<Point<dimensions> > pointsSorted;
     for(size_t i=0; i<nbOfPoints; ++i){
-        pointsSorted.push_back(points[i]);
+        pointsSorted.push_back(points->operator [](i));
     }
 
     std::pair<Point<dimensions> , Point<dimensions> > closestPointPair(pointsSorted.at(0), pointsSorted.at(1));
@@ -114,8 +114,8 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions>::swee
     return closestPointPair;
 }
 
-template <size_t dimensions>
-std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions>::bruteForce(){
+template <size_t dimensions, size_t nbOfPoints>
+std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfPoints>::bruteForce(){
     double min = DBL_MAX;
     size_t index1, index2;
     double distance;

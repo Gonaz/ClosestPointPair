@@ -4,16 +4,16 @@
 #include "Point.h"
 #include <algorithm>
 
-template <size_t dimensions>
+template <size_t dimensions, size_t nbOfPoints>
 struct NDimensional {
-    NDimensional(size_t nbOfPoints);
+    NDimensional();
+    ~NDimensional(){delete points;}
     std::pair<Point<dimensions>, Point<dimensions> > sweep();
     std::pair<Point<dimensions>, Point<dimensions> > bruteForce();
     void fillPlane();
     void fillPlaneWorstCase();
 
-    std::vector<Point<dimensions> > points;
-    size_t nbOfPoints;
+    std::array<Point<dimensions>, nbOfPoints> *points;
 
     std::random_device rd;
     std::mt19937 gen;

@@ -40,15 +40,9 @@ void print(std::pair<Point<dimension>, Point<dimension> > closestPointPair){
     printf("Distance: %lf\n", closestPointPair.first.calculateDistanceTo(closestPointPair.second));
 }
 
-template<size_t dimensions>
+template<size_t dimensions, size_t nbOfPoints>
 void go(){
-    unsigned long *sizes;
-    size_t nbOfPoints = 0;
-
-    sizes = new unsigned long[dimensions];
-    nbOfPoints = getNumberOfPoints();
-
-    NDimensional<dimensions> d(nbOfPoints);
+    NDimensional<dimensions, nbOfPoints> d;
     std::pair<Point<dimensions>, Point<dimensions> > closestPointPair;
 
     auto t1 = std::chrono::high_resolution_clock::now();
@@ -57,11 +51,9 @@ void go(){
     printf("\nPlane Sweep\n");
     print(closestPointPair);
     std::cout << "Duration: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << " milliseconds\n";
-
-    delete[] sizes;
 }
 
 int main() {
-    go<2>();
+    go<2, 10000000>();
     return 0;
 }
