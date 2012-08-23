@@ -5,6 +5,7 @@
 #endif //STATISTICS
 #include <deque>
 #include <cfloat>
+#include <algorithm>
 #include "NDimensional.h"
 
 using namespace std;
@@ -45,7 +46,7 @@ void NDimensional<dimensions, nbOfPoints>::fillPlaneWorstCase(){
 
 template <size_t dimensions, size_t nbOfPoints>
 std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfPoints>::sweep(){
-    std::sort(points->begin(), points->end(), [](Point<dimensions> p1, Point<dimensions> p2){return p1.getCoordinate(0) < p2.getCoordinate(0);});
+    std::sort(points->begin(), points->end(), [](Point<dimensions> p1, Point<dimensions> p2){return p1.coordinates[0] < p2.coordinates[0];});
 
     deque<Point<dimensions> > pointsSorted;
     for(size_t i=0; i<nbOfPoints; ++i){
@@ -56,16 +57,16 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
 
     double d = pointsSorted[0].calculateSquareDistanceTo(pointsSorted[1]);
     double sqrtD = sqrt(d);
-    long unsigned l = 2;
+    unsigned long l = 2;
 
 #if STATISTICS
-    long unsigned aantal = 0; //nodige voor de gemiddelde k-waarde/c-waarde te berekenen
-    long unsigned k = 0; //nodige voor de gemiddelde k-waarde te berekenen
-    long unsigned c = 0;  //nodige voor de gemiddelde c-waarde te berekenen
-    long unsigned maxK = 0; //nodige voor de maximale k-waarde te berekenen
-    long unsigned tellerK = 0; //nodige voor de maximale k-waarde te berekenen
-    long unsigned maxC = 0;
-    long unsigned tellerC = 0;
+    unsigned long aantal = 0; //nodige voor de gemiddelde k-waarde/c-waarde te berekenen
+    unsigned long k = 0; //nodige voor de gemiddelde k-waarde te berekenen
+    unsigned long c = 0;  //nodige voor de gemiddelde c-waarde te berekenen
+    unsigned long maxK = 0; //nodige voor de maximale k-waarde te berekenen
+    unsigned long tellerK = 0; //nodige voor de maximale k-waarde te berekenen
+    unsigned long maxC = 0;
+    unsigned long tellerC = 0;
 #endif //STATISTICS
 
     while(l<pointsSorted.size()){
@@ -82,7 +83,7 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
 #endif //STATISTICS
 
         for(unsigned long j=0; j<l;){
-            if(pointsSorted[l].getCoordinate(0)-pointsSorted[j].getCoordinate(0) >= sqrtD){
+            if(pointsSorted[l].coordinates[0]-pointsSorted[j].coordinates[0] >= sqrtD){
                 pointsSorted.pop_front();
                 --l;
             } else{
@@ -93,7 +94,8 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
                 bool candidate = true;
                 size_t i=1;
                 while(candidate && i<dimensions){
-                    candidate = pointsSorted[l].getCoordinate(i)-pointsSorted[j].getCoordinate(i++) < sqrtD;
+                    candidate = pointsSorted[l].coordinates[i]-pointsSorted[j].coordinates[i] < sqrtD;
+                    ++i;
                 }
                 
                 if(candidate){
@@ -101,7 +103,7 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
                     ++c;  //nodige voor de gemiddelde c-waarde te berekenen
                     ++tellerC;
 #endif //STATISTICS
-                    double distance = pointsSorted[j].calculateSquareDistanceTo(pointsSorted[l]);
+                    const double distance = pointsSorted[j].calculateSquareDistanceTo(pointsSorted[l]);
                     if(distance < d){
                         d = distance;
                         sqrtD = sqrt(d);

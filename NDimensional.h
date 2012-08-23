@@ -2,14 +2,16 @@
 #define	_NDIMENSIONAL_H
 
 #include "Point.h"
-#include <algorithm>
+#include <random>
 
 template <size_t dimensions, size_t nbOfPoints>
 struct NDimensional {
     NDimensional();
     ~NDimensional(){delete points;}
+
     std::pair<Point<dimensions>, Point<dimensions> > sweep();
     std::pair<Point<dimensions>, Point<dimensions> > bruteForce();
+
     void fillPlane();
     void fillPlaneWorstCase();
 
