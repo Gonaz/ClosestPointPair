@@ -52,9 +52,9 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
         pointsSorted.push_back(points->operator [](i));
     }
 
-    std::pair<Point<dimensions> , Point<dimensions> > closestPointPair(pointsSorted.at(0), pointsSorted.at(1));
+    std::pair<Point<dimensions> , Point<dimensions> > closestPointPair(pointsSorted[0], pointsSorted[1]);
 
-    double d = pointsSorted.at(0).calculateSquareDistanceTo(pointsSorted.at(1));
+    double d = pointsSorted[0].calculateSquareDistanceTo(pointsSorted[1]);
     double sqrtD = sqrt(d);
     long unsigned l = 2;
 
@@ -82,7 +82,7 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
 #endif //STATISTICS
 
         for(unsigned long j=0; j<l;){
-            if(pointsSorted.at(l).getCoordinate(0)-pointsSorted.at(j).getCoordinate(0) >= sqrtD){
+            if(pointsSorted[l].getCoordinate(0)-pointsSorted[j].getCoordinate(0) >= sqrtD){
                 pointsSorted.pop_front();
                 --l;
             } else{
@@ -93,7 +93,7 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
                 bool candidate = true;
                 size_t i=1;
                 while(candidate && i<dimensions){
-                    candidate = pointsSorted.at(l).getCoordinate(i)-pointsSorted.at(j).getCoordinate(i++) < sqrtD;
+                    candidate = pointsSorted[l].getCoordinate(i)-pointsSorted[j].getCoordinate(i++) < sqrtD;
                 }
                 
                 if(candidate){
@@ -101,12 +101,12 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
                     ++c;  //nodige voor de gemiddelde c-waarde te berekenen
                     ++tellerC;
 #endif //STATISTICS
-                    double distance = pointsSorted.at(j).calculateSquareDistanceTo(pointsSorted.at(l));
+                    double distance = pointsSorted[j].calculateSquareDistanceTo(pointsSorted[l]);
                     if(distance < d){
                         d = distance;
                         sqrtD = sqrt(d);
-                        closestPointPair.first = pointsSorted.at(j);
-                        closestPointPair.second = pointsSorted.at(l);
+                        closestPointPair.first = pointsSorted[j];
+                        closestPointPair.second = pointsSorted[l];
                     }
                 }
                 ++j;
