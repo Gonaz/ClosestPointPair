@@ -5,39 +5,24 @@
 #include "Point.cpp"
 #include "NDimensional.cpp"
 
-size_t getDimension(){
-    std::cout << "Dimension: ";
-
-    size_t dimension;
-    std::cin >> dimension;
-
-    return dimension;
-}
-
-size_t getNumberOfPoints(){
-    std::cout << "Number of points: ";
-
-    size_t nbOfPoints;
-    std::cin >> nbOfPoints;
-
-    return nbOfPoints;
-}
-
 template <size_t dimension>
 void print(std::pair<Point<dimension>, Point<dimension> > closestPointPair){
-    printf("Point 1: (");
-    for(size_t i=0; i<dimension; ++i){
-        printf("%lf,", closestPointPair.first.getCoordinate(i));
+    std::cout << "Point 1: (" << std::fixed;
+    for(size_t i=0; i<(dimension-1); ++i){
+        std::cout << closestPointPair.first.getCoordinate(i) << ", ";
     }
-    printf(")\n");
+    std::cout << closestPointPair.first.getCoordinate(dimension-1);
 
-    printf("Point 2: (");
-    for(size_t i=0; i<dimension; ++i){
-        printf("%lf, ", closestPointPair.second.getCoordinate(i));
+    std::cout << ")" << std::endl;
+
+    std::cout << "Point 2: (";
+    for(size_t i=0; i<dimension-1; ++i){
+       std::cout << closestPointPair.second.getCoordinate(i) << ", ";
     }
-    printf(")\n");
+    std::cout << closestPointPair.second.getCoordinate(dimension-1);
+    std::cout << ")" << std::endl;
     
-    printf("Distance: %lf\n", closestPointPair.first.calculateDistanceTo(closestPointPair.second));
+    std::cout << "Distance: " << closestPointPair.first.calculateDistanceTo(closestPointPair.second) << std::endl;
 }
 
 template<size_t dimensions, size_t nbOfPoints>
@@ -48,7 +33,7 @@ void go(){
     auto t1 = std::chrono::high_resolution_clock::now();
     closestPointPair = d.sweep();
     auto t2 = std::chrono::high_resolution_clock::now();
-    printf("\nPlane Sweep\n");
+    std::cout << "Plane sweep" << std::endl;
     print(closestPointPair);
     std::cout << "Duration: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2-t1).count() << " milliseconds\n";
 }

@@ -1,8 +1,11 @@
-#include "NDimensional.h"
+#define STATISTICS 0
 
+#if STATISTICS
 #include <iostream>
+#endif //STATISTICS
 #include <deque>
 #include <cfloat>
+#include "NDimensional.h"
 
 using namespace std;
 
@@ -55,6 +58,7 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
     double sqrtD = sqrt(d);
     long unsigned l = 2;
 
+#if STATISTICS
     long unsigned aantal = 0; //nodige voor de gemiddelde k-waarde/c-waarde te berekenen
     long unsigned k = 0; //nodige voor de gemiddelde k-waarde te berekenen
     long unsigned c = 0;  //nodige voor de gemiddelde c-waarde te berekenen
@@ -62,8 +66,10 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
     long unsigned tellerK = 0; //nodige voor de maximale k-waarde te berekenen
     long unsigned maxC = 0;
     long unsigned tellerC = 0;
+#endif //STATISTICS
 
     while(l<pointsSorted.size()){
+#if STATISTICS
         ++aantal; //nodige voor de gemiddelde k-waarde te berekenen
         if(tellerK>maxK){ //nodige voor de maximale k-waarde te berekenen
             maxK = tellerK;
@@ -73,14 +79,17 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
         }
         tellerK = 0; //nodige voor de maximale k-waarde te berekenen
         tellerC = 0; //nodige voor de maximale c-waarde te berekenen
+#endif //STATISTICS
 
         for(unsigned long j=0; j<l;){
             if(pointsSorted.at(l).getCoordinate(0)-pointsSorted.at(j).getCoordinate(0) >= sqrtD){
                 pointsSorted.pop_front();
                 --l;
             } else{
+#if STATISTICS
                 ++k; //nodige voor de gemiddelde k-waarde te berekenen
                 ++tellerK; //nodige voor de maximale k-waarde te berekenen
+#endif //STATISTICS
                 bool candidate = true;
                 size_t i=1;
                 while(candidate && i<dimensions){
@@ -88,8 +97,10 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
                 }
                 
                 if(candidate){
+#if STATISTICS
                     ++c;  //nodige voor de gemiddelde c-waarde te berekenen
                     ++tellerC;
+#endif //STATISTICS
                     double distance = pointsSorted.at(j).calculateSquareDistanceTo(pointsSorted.at(l));
                     if(distance < d){
                         d = distance;
@@ -104,12 +115,11 @@ std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfP
         ++l;
     }
 
+#if STATISTICS
     double kGem = (double)k/aantal; //nodige voor de gemiddelde k-waarde te berekenen
     double cGem = (double)c/aantal;  //nodige voor de gemiddelde c-waarde te berekenen
-    printf("%lf\t", kGem); //nodige voor de gemiddelde k-waarde te berekenen
-    printf("%lf\t", cGem); //nodige voor de gemiddelde c-waarde te berekenen
-    printf("%lu\t", maxK);
-    printf("%lu\t", maxC);
+    std::cout << kGem << "\t" << cGem << "\t" << "\t" << maxK << "\t" << maxC << std::endl;
+#endif //STATISTICS
 
     return closestPointPair;
 }
