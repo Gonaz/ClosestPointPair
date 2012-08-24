@@ -3,16 +3,16 @@
 
 #include <array>
 
-template<size_t dimensions>
+template<typename T, size_t dimensions>
 struct Point {
     Point(){}
 
-    void setCoordinates(std::array<double, dimensions> &coordinates);
+    void setCoordinates(std::array<T, dimensions> &coordinates);
 
-    double calculateDistanceTo(const Point &p) const;
-    double calculateSquareDistanceTo(const Point &p) const;
+    T calculateDistanceTo(const Point &p) const;
+    T calculateSquareDistanceTo(const Point &p) const;
 
-    std::array<double, dimensions> coordinates;
+    std::array<T, dimensions> coordinates;
 };
 
 #endif	/* _POINT_H */

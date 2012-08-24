@@ -4,8 +4,8 @@
 #include "Point.cpp"
 #include "NDimensional.cpp"
 
-template <size_t dimension>
-void print(std::pair<Point<dimension>, Point<dimension> > closestPointPair){
+template <typename T, size_t dimension>
+void print(std::pair<Point<T, dimension>, Point<T, dimension> > closestPointPair){
     std::cout << "Point 1: (" << std::fixed;
     for(size_t i=0; i<(dimension-1); ++i){
         std::cout << closestPointPair.first.coordinates[i] << ", ";
@@ -24,10 +24,10 @@ void print(std::pair<Point<dimension>, Point<dimension> > closestPointPair){
     std::cout << "Distance: " << closestPointPair.first.calculateDistanceTo(closestPointPair.second) << std::endl;
 }
 
-template<size_t dimensions, size_t nbOfPoints>
+template<typename T, size_t dimensions, size_t nbOfPoints>
 void go(){
-    NDimensional<dimensions, nbOfPoints> d;
-    std::pair<Point<dimensions>, Point<dimensions> > closestPointPair;
+    NDimensional<T, dimensions, nbOfPoints> d;
+    std::pair<Point<T, dimensions>, Point<T, dimensions> > closestPointPair;
 
     auto t1 = std::chrono::high_resolution_clock::now();
     closestPointPair = d.sweep();
@@ -38,6 +38,6 @@ void go(){
 }
 
 int main() {
-    go<2, 10000000>();
+    go<double, 2, 10000000>();
     return 0;
 }

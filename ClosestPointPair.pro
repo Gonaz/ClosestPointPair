@@ -16,5 +16,3 @@ SOURCES += main.cpp \
 #QMAKE_CXXFLAGS += -O3 -std=c++11 -Wall -Wextra -m64 -fprofile-use
 
 QMAKE_CXXFLAGS += -O3 -m64 -std=c++11 -Wall -Wextra -Wconversion -Wdouble-promotion -Wfloat-equal
-
-
