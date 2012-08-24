@@ -1,11 +1,11 @@
-#define STATISTICS 1
+#define STATISTICS 0
 
 #if STATISTICS
 #include <iostream>
 #endif //STATISTICS
 #include <deque>
-#include <cfloat>
 #include <algorithm>
+#include <cfloat>
 #include "NDimensional.h"
 
 using namespace std;
@@ -48,11 +48,7 @@ template <size_t dimensions, size_t nbOfPoints>
 std::pair<Point<dimensions> , Point<dimensions> > NDimensional<dimensions, nbOfPoints>::sweep(){
     std::sort(points->begin(), points->end(), [](Point<dimensions> p1, Point<dimensions> p2){return p1.coordinates[0] < p2.coordinates[0];});
 
-    deque<Point<dimensions> > pointsSorted;
-    for(size_t i=0; i<nbOfPoints; ++i){
-        pointsSorted.push_back(points->operator [](i));
-    }
-
+    deque<Point<dimensions> > pointsSorted(points->cbegin(), points->cend());
     std::pair<Point<dimensions> , Point<dimensions> > closestPointPair(pointsSorted[0], pointsSorted[1]);
 
     double d = pointsSorted[0].calculateSquareDistanceTo(pointsSorted[1]);

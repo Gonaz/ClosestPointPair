@@ -10,13 +10,12 @@ void Point<dimensions>::setCoordinates(std::array<double, dimensions> &coordinat
 }
 
 template <size_t dimensions>
-double Point<dimensions>::calculateDistanceTo(Point &p) const{
-    return sqrt(calculateSquareDistanceTo(p));
+double Point<dimensions>::calculateDistanceTo(const Point &p) const{
+    return std::sqrt(calculateSquareDistanceTo(p));
 }
 
 template <size_t dimensions>
-double Point<dimensions>::calculateSquareDistanceTo(Point &p) const{
-    //TODO: misschien eens herschrijven met std::accumulate
+double Point<dimensions>::calculateSquareDistanceTo(const Point &p) const{
     std::array<double, dimensions> diff;
 
     for(size_t i=0; i<dimensions; ++i){

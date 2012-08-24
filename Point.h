@@ -1,7 +1,6 @@
 #ifndef _POINT_H
 #define	_POINT_H
 
-#include <cstddef>
 #include <array>
 
 template<size_t dimensions>
@@ -10,8 +9,8 @@ struct Point {
 
     void setCoordinates(std::array<double, dimensions> &coordinates);
 
-    double calculateDistanceTo(Point &p) const;
-    double calculateSquareDistanceTo(Point &p) const;
+    double calculateDistanceTo(const Point &p) const;
+    double calculateSquareDistanceTo(const Point &p) const;
 
     std::array<double, dimensions> coordinates;
 };

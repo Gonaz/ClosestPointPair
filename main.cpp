@@ -1,5 +1,4 @@
 #include <iostream>
-#include <exception>
 #include <chrono>
 
 #include "Point.cpp"
